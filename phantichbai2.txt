@@ -1,0 +1,51 @@
+total_points ở dòng 2 là biến Global hay Local?
+total_points = 100
+Đây là biến toàn cục (Global Variable) vì nó được khai báo bên ngoài mọi hàm.
+Biến này có thể được truy cập từ bất kỳ đâu trong chương trình (bao gồm cả bên trong hàm nếu chỉ đọc giá trị của nó).
+
+
+Đoạn gây lỗi:
+def add_reward_points(points_earned):
+    total_points = total_points + points_earned
+Thông báo lỗi:
+UnboundLocalError: local variable 'total_points' referenced before assignment
+Nguyên nhân
+Khi Python nhìn thấy phép gán:
+total_points = ...
+Python sẽ tự động coi total_points trong hàm là biến cục bộ (local variable).
+
+
+Nếu chỉ đọc giá trị thì có lỗi không?
+Ví dụ:
+total_points = 100
+def show_points():
+    print(total_points)
+Show_points()
+Không bị lỗi.
+Kết quả:
+100
+Lý do:
+Đọc giá trị của biến global là hợp lệ.
+Chỉ khi thực hiện phép gán (=) thì Python mới coi nó là biến local.
+
+Cách sửa 1 - Dùng từ khóa nào?
+Sử dụng từ khóa:
+global
+Ví dụ:
+def add_reward_points(points_earned):
+    global total_points
+    total_points = total_points + points_earned
+Từ khóa này nói với Python:
+Hãy sử dụng biến total_points ở phạm vi toàn cục, không tạo biến local mới.
+
+
+Cách sửa 2 (Khuyến nghị)
+Thay vì sửa trực tiếp biến global, hàm nên:
+Nhận dữ liệu đầu vào qua tham số.
+Tính toán.
+Dùng lệnh:
+return
+để trả về kết quả.
+
+
+
